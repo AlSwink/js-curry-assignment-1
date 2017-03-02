@@ -27,11 +27,16 @@ const calculateTotals =
     carts => {
       const bill = carts.map((item) => {
         const rItem = (customer, total) => ({customer, total})
-        const price = item.items.reduce(
-          (previous, current) => {
-
+        const iList = item.items
+        let sum = 0
+        iList.forEach(it => {
+          listings.forEach(listing => {
+            const lp = listedPrice(listing)
+            const lp2 = lp(it)
+            sum += lp2
           })
-        return rItem(item.customer, tot)
+        })
+        return rItem(item.customer, sum)
       })
       return bill
     }
